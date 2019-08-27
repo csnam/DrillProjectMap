@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #map {
+        width: 100%;
+        height: 400px;
+        background-color: grey;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>My Google Maps Demo</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+    <script>
+        let gInfo ;
+        
+        function getLocation(cb) {
+            if (navigator.geolocation) { // GPS를 지원하면
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    console.log(position.coords.latitude + ' ' + position.coords.longitude);
+                    gInfo = position;
+                    cb(gInfo)
+                }, function(error) {
+                    console.error(error);
+                }, {
+                    enableHighAccuracy: false,
+                    maximumAge: 0,
+                    timeout: Infinity
+                });
+               
+            } else {
+              console.log('GPS를 지원하지 않습니다');
+            }
+          
+        }
+        function initMap(){
+          var uluru ={lat: 37.4949948, lng: 127.1224259};
+          var markerTitle = "핀테크기술지원센터";
+         
+          var locations = [
+        {lat: 37.498311, lng: 127.0265114},
+        {lat: 37.501280, lng: 127.0350475},
+        {lat: 37.504378, lng: 127.0274606},
+        {lat: 37.517033, lng: 127.024600},
+        {lat: 37.551702, lng: 127.0286968},
+        {lat: 37.571264, lng: 127.02153657},
+        {lat: 37.5804724, lng: 127.02258905}
+    ]
+
+          getLocation(function(data){
+            console.log("init Map info", data);
+            var map1 = new google.maps.Map(              
+              document.getElementById('map'),{zoom:17.81,center: uluru}, {
+                center: {lat: 37.538028, lng: 127.026554}
+              }
+            );
+
+          })
+
+          
+        }
+    </script>
+    <script 
+      src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCMq3ynwd0frB5IdCmgeLZ_baBumJBq65o&callback=initMap"></script>
+      <!-- <script async defer
+      src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCMq3ynwd0frB5IdCmgeLZ_baBumJBq65o&callback=initMap"></script> -->
+  </body>
+</html>
+
+
+
+<!-- var Y_point = 37.4949948; // Y 좌표
+var X_point = 127.1224259; // X 좌표
+var zoomLevel = 17.81; // 첫 로딩시 보일 지도의 확대 레벨 -->
